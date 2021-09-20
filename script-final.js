@@ -17,10 +17,11 @@
         const image = document.querySelectorAll('.image'); // tout ce qui a la classe Image = les differentes images (ghost/ babie / jp) (list de div)
 
         let lastItem; //defini lastItem sans lui donner de valeur (variable vide)
-        let timeUp = false; // determine la boolean (tre/false) qui aura un effet sur le temps de jeu (quand timeUp = true, le jeu se termine)
-        let score = 0; //score 
+        let timeUp = false; // determine la boolean (true/false) qui aura un effet sur le temps de jeu (quand timeUp = true, le jeu se termine)
+        let score = 0; //score
 
-       //defini deux parametres min/max ici (on leurs donnera une valeur quand la fonction sera appellée dans show()), les images aparaitront aleatoirement pendant le temps compris entre ces valeurs.
+       //defini deux parametres min/max ici (on leurs donnera une valeur quand la fonction sera appellée dans show()),
+       //les images aparaitront aleatoirement pendant le temps compris entre ces valeurs.
         function randomTime(min, max) {
             return Math.round(Math.random() * (max - min) + min);
         }
@@ -28,10 +29,10 @@
         //on creer un tableau avec toutes le nom des sources des images
         let sources = ["malus-1.svg", "malus-2.svg", "malus-3.svg", "malus-4.svg", "malus-5.svg", "ghost-1.svg", "ghost-2.svg", "ghost-3.svg", "ghost-4.svg", "ghost-5.svg", "bonus-1.png", "bonus-2.png"];
 
-       // on choisi aleatoirement un item dans une liste 
+       // on choisi aleatoirement un item dans une liste
         function randomItem(items) {
             const idx = Math.floor(Math.random() * items.length); //index aleatoire
-            const item = items[idx]; 
+            const item = items[idx];
             if (item === lastItem) { //si l'item choisi correspond au dernier item choisi on rejou la fonction
 
                 return randomItem(items);
@@ -47,7 +48,7 @@
             //choisi un element d'une liste au hazard
             const place = randomItem(places); //choix où aparait l'image dans la page
             const imageChoice = randomItem(image);//choix de l'Image (list dans html)
-            const chosenImage = randomItem(sources);//choix la source de l'img 
+            const chosenImage = randomItem(sources);//choix la source de l'img
 
             const iconSplit = chosenImage.split('-');//separer le nom de l'element choisi en deux apres "-"
             const iconId = iconSplit[0];// donne la premiere parti seulement du nom de la source img soit bonus soit malus soit ghost
@@ -80,7 +81,8 @@
                 imageChoice.removeEventListener('click', bonkBonus);
                 imageChoice.addEventListener('click', bonkGhost);
             }
-//la function setTimeout prend en compte deux choses: une action a faire et un temps. Apres que ce temps soit ecouler l'action demare. Ici la classe .up est retirer de la div 'place' apres "time" qui correspond a un chiffre random entre 600 et 1000 (const randomTime).
+//la function setTimeout prend en compte deux choses: une action a faire et un temps. Apres que ce temps soit ecoulé l'action demare.
+//Ici la classe .up est retirer de la div 'place' apres "time" qui correspond a un chiffre random entre 600 et 1000 (const randomTime).
             setTimeout(() => {
                 place.classList.remove('up');//on enleve la classe up a chaque fois que le temps d'aparition de l'image est fini
                 if (!timeUp) show(); //si timeup = false on rejoue la function show si c'est true alors le jeu s'arrete
@@ -88,9 +90,11 @@
 
         }
 
-  
 
-// lance le jeu , remet tout les compteurs à 0, lance la function count-down, lance la function show, fait disparaitre la modal et lance le "timer" en disant que au bout de 15 second timeup = true (si timeup = true alors la function show s'arrete et donc les images arretes d'aparaitre.)
+
+// lance le jeu , remet tout les compteurs à 0, lance la function count-down, lance la function show, fait disparaitre la modal
+//et lance le "timer" en disant que au bout de 15 second timeup = true (si timeup = true alors la function show s'arrete et donc
+//les images arretes d'aparaitre.)
         function startGame() {
             scoreBoard.textContent = 0;
             timeUp = false;
@@ -101,7 +105,7 @@
             setTimeout(() => timeUp = true, 15000)
         }
 // ------------------------------------------------- click event -----------------------------
-       
+
 function bonkGhost() {
             score++; //score +1
           this.parentNode.classList.remove('up'); //enleve la class up (donc fait diparaitre l'image des qu'elle est clicker)
@@ -131,13 +135,13 @@ function bonkGhost() {
         const cursor = document.querySelector(".cursor img")
 
         window.addEventListener("mousemove", (e) => {
-            cursor.style.top = e.pageY + "px";//nombre pixel en partant de la vertical 
+            cursor.style.top = e.pageY + "px";//nombre pixel en partant de la vertical
             cursor.style.left = e.pageX + "px";//nombre pixel en partant de la gauche
 
             window.addEventListener("click", () => {
                 cursor.style.animation = "hit 0.1s ease"; //ajoute la proprieté animation avec la valeur hit 0.1s ease.
                 setTimeout(() => {
-                    cursor.style.removeProperty("animation") //apres 100millisecond on retire la proprieté animation qui pourra donc fonctionner a la chaine 
+                    cursor.style.removeProperty("animation") //apres 100millisecond on retire la proprieté animation qui pourra donc fonctionner a la chaine
                 }, 100);
                 //la fonction click est a l'interieur de la fonction mousemove. le curseur ne pourrait pas bouger sans la fonction mousemove
             });
@@ -151,7 +155,7 @@ function bonkGhost() {
             temps.setTime(secondes * 1000);
             return temps.getMinutes().toString().padStart(2, '0') + ":" + temps.getSeconds().toString().padStart(2, '0');
         }
-        function launch_count_down() { //apelle la function timer 
+        function launch_count_down() { //apelle la function timer
             //creation de la variable qui appelle la count_down_div
             let count_down_div = document.getElementById("count_down_div");
             // 1- le délai
@@ -172,7 +176,7 @@ function bonkGhost() {
             setTimeout(function () {
                 // on STOPPE
                 clearInterval(count_Interval);
-                count_down_div.textContent = 'game over';//affiche game over a la fin du jeu 
+                count_down_div.textContent = 'game over';//affiche game over a la fin du jeu
                     var synth = window.speechSynthesis;
                 var utterance1 = new SpeechSynthesisUtterance('game over');
                 synth.speak(utterance1);
